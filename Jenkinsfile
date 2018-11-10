@@ -2,8 +2,7 @@ pipeline {
     agent {
         label "RHEL&&TEST"
     }
-    agent any
-    stages {
+      stages {
         stage ('Build'){
             agent {
                 label "RHEL&&TEST"
