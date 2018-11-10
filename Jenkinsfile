@@ -1,5 +1,5 @@
 pipeline {
-  agents any
+  agents {label 'RHEL&&TEST'}
     stages {
       stage ('Build'){
         steps {
