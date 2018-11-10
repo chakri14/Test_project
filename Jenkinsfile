@@ -1,10 +1,11 @@
 pipeline{
 agent any
-stage('Parallel Stage') {
-             parallel {
-                stage('Build-1') {
-                    agent {
-                        label "RHEL&&TEST"
+	stages{
+		stage('Parallel Stage') {
+             		parallel {
+                		stage('Build-1') {
+                    			agent {
+                        		label "RHEL&&TEST"
                     }
                     steps {
                         echo "Running on RHEL&&TEST"
@@ -19,5 +20,6 @@ stage('Parallel Stage') {
                     }
                 }
 			}
+	}
 	}
 }
