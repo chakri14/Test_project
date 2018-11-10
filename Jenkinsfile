@@ -1,17 +1,20 @@
 pipeline {
   agent {label 'RHEL&&TEST'}
-    stages {
-        parallel{
-          stage ('Build-1'){
-             steps {
-                echo 'Build-1'
-              }
-            }
-          stage ('Build-2'){
+      stages {
+        stage("test") {
             steps {
-              echo 'Build-2'
+                parallel (
+                    "Unit Test" : {
+                        build("unit-test-job")
+                    },
+                    "Component Test" : {
+                        build("component-test-job")
+                    },
+                    "Build" : {
+                        build("build-job")
+                    }
+                )
             }
-          }
-      }
+        }
     }
 }
