@@ -1,11 +1,17 @@
 pipeline {
   agent {label 'RHEL&&TEST'}
     stages {
-      stage ('Build'){
-        steps {
-          echo 'Build Job'
-        }
+        parallel{
+          stage ('Build-1'){
+             steps {
+                echo 'Build-1'
+              }
+            }
+          stage ('Build-2'){
+            steps {
+              echo 'Build-2'
+            }
+          }
       }
     }
-
 }
