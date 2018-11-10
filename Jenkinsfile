@@ -1,19 +1,46 @@
 pipeline {
-  agent {label 'RHEL&&TEST'}
-      stages {
-        stage("test") {
+    agent any
+    stages {
+        stage('Non-Parallel Stage') {
             steps {
-                parallel (
-                    "Unit Test" : {
-                        build("unit-test-job")
-                    },
-                    "Component Test" : {
-                        build("component-test-job")
-                    },
-                    "Build" : {
-                        build("build-job")
+                echo 'This stage will be executed first.'
+            }
+        }
+        stage('Parallel Stage') {
+             parallel {
+                stage('Branch A') {
+                    agent {
+                        label "RHEL&&TEST"
                     }
-                )
+                    steps {
+                        echo "On Branch A"
+                    }
+                }
+                stage('Branch B') {
+                    agent {
+                        label "RHEL&&TEST"
+                    }
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
+                stage('Branch C') {
+                    agent {
+                        label "RHEL&&TEST"
+                    }
+                    stages {
+                        stage('Nested 1') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('Nested 2') {
+                            steps {
+                                echo "In stage Nested 2 within Branch C"
+                            }
+                        }
+                    }
+                }
             }
         }
     }
