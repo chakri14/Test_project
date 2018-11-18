@@ -1,11 +1,24 @@
 pipeline {
 	agent none
 	stages {
-		stage('Build'){
-			agent {label "RHEL"}
-			steps {
-			echo "Hello world"
-			}
+        stage('Parallel Stage') {
+            parallel {
+				stage('Build'){
+					agent { label "RHEL" }
+					steps {
+					bat'''
+					svn upgrade
+					cd build
+					scons
+					'''
+					}
+					post {
+						always {
+							archiveArtifacts artifacts: 'build/Bin/,software/tests/TestData/ImageService/', fingerprint: true
+						}
+					}
+				}
+ 			}
 		}
 	}
 }
