@@ -1,14 +1,10 @@
 pipeline {
 	agent none
 	stages {
-		stage('Windows-Build'){
-			agent {label "Win"}
+		stage('Build'){
+			agent {label "RHEL"}
 			steps {
-			bat'''
-			svn upgrade
-			cd build
-			scons
-			'''
+			echo "Hello world"
 			}
 		}
 	}
